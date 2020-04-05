@@ -11,7 +11,7 @@ app.get("/", (request, response) => {
 });
 
 io.on("connection", (socket) => {
-  socket.emit("message", "user connected");
+  io.emit("message", "user connected");
   socket.on("private message", (message) => {
     socket.emit("message", message + " (only you see this)");
   });
