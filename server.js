@@ -1,31 +1,32 @@
 const express = require("express");
 const http = require("http");
-const socketIo = require("socket.io");
+const socketIO = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {});
+const io = socketIO(server); // exposes /socket.io endpoint!
+
+io.on("connection", (socket) => {
+  console.log("user connected");
+  io.emit("chat message", "hello");
+
+  socket.on("private message", (message) => {
+    socket.emit("chat message", message);
+  });
+
+  socket.on("global message", (message) => {
+    io.emit("chat message", message);
+  });
+
+  socket.on("broadcast message", (message) => {
+    socket.broadcast.emit("chat message", message);
+  });
+});
 
 app.get("/", (request, response) => {
   response.sendFile(__dirname + "/index.html");
 });
 
-io.on("connection", (socket) => {
-  io.emit("message", "user connected");
-  socket.on("private message", (message) => {
-    socket.emit("message", message + " (only you see this)");
-  });
-  socket.on("global message", (message) => {
-    io.emit("message", message + " (everybody sees this)");
-  });
-  socket.on("broadcast message", (message) => {
-    socket.broadcast.emit(
-      "message",
-      message + " (everybody but you sees this)"
-    );
-  });
-});
-
 server.listen(5000, () => {
-  console.log("server listening on port 5000");
+  console.log("server is up and running on port 5000");
 });

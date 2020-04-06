@@ -6,10 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muratkemaldar/using-socket-io-with-vue.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muratkemaldar/using-socket-io-with-vue/issues"
+  },
+  "homepage": "https://github.com/muratkemaldar/using-socket-io-with-vue#readme",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^2.3.0"
-  }
+  },
+  "devDependencies": {}
 }
